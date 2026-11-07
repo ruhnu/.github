@@ -18,6 +18,13 @@ each fragment useless by itself. One island is not the archipelago.
 
 - Design documents and probe experiments for the SSH work
 - Forks of the upstream CDOC2 repositories, where changes are prepared for review
+- [ruhnu-openspec](https://github.com/ruhnu/ruhnu-openspec): specs and change proposals
+  shared across the forks
+- [ruhnu-sbx](https://github.com/ruhnu/ruhnu-sbx): Docker sandbox kit for running Claude
+  Code on the forks
+
+Changes in the forks are prepared so they stay mergeable upstream; see
+[how we work on the forks](https://github.com/ruhnu/.github/blob/main/CONTRIBUTING.md).
 
 ## Status
 
