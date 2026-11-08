@@ -74,6 +74,8 @@ Access ends when the shares expire on the servers, or earlier when they are dele
 - Forks of the upstream CDOC2 repositories, where changes are prepared for review
 - [ruhnu-openspec](https://github.com/ruhnu/ruhnu-openspec): specs and change proposals
   shared across the forks
+- [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo): scripts that run the whole scheme
+  locally — two shares servers, an ssh-agent and `cdoc2-cli`
 - [ruhnu-sbx](https://github.com/ruhnu/ruhnu-sbx): Docker sandbox kit for running Claude
   Code on the forks
 
@@ -82,8 +84,15 @@ Changes in the forks are prepared so they stay mergeable upstream; see
 
 ## Status
 
-Early. Design and experiments, not a working system — treat anything here as a draft unless
-it says otherwise.
+**Phase 1 works end to end:** SSH public key recipients (ECDSA P-256 keys) in `cdoc2-cli`,
+the client library and the shares server, where it sits behind a feature flag that is off by
+default. It runs locally with [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo), and the pull
+requests in the forks are under review — see the
+[tracking issue](https://github.com/ruhnu/ruhnu-openspec/issues/1).
+
+**Next:** phase 2, recipients identified by a DID.
+
+Still a prototype: nothing here is released or meant for production use yet.
 
 **Not affiliated with RIA or the open-eid project**, and not an official CDOC2 component.
 Upstream lives at [open-eid](https://github.com/open-eid).
