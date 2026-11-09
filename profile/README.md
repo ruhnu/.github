@@ -71,7 +71,7 @@ Access ends when the shares expire on the servers, or earlier when they are dele
 ## What lives here
 
 - Design documents and probe experiments for the SSH work
-- Forks of the upstream CDOC2 repositories, where changes are prepared for review
+- Forks of the upstream CDOC2 repositories, where the Ruhnu changes live
 - [ruhnu-openspec](https://github.com/ruhnu/ruhnu-openspec): specs and change proposals
   shared across the forks
 - [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo): scripts that run the whole scheme
@@ -79,7 +79,7 @@ Access ends when the shares expire on the servers, or earlier when they are dele
 - [ruhnu-sbx](https://github.com/ruhnu/ruhnu-sbx): Docker sandbox kit for running Claude
   Code on the forks
 
-Changes in the forks are prepared so they stay mergeable upstream; see
+Changes in the forks are kept so that upstream changes keep merging in; see
 [how we work on the forks](https://github.com/ruhnu/.github/blob/main/CONTRIBUTING.md).
 
 ## Status
