@@ -99,6 +99,10 @@ and decrypting through your ssh-agent needs only Docker; see
 after at most 14 days. Revoking earlier still takes an admin on one of the servers; with DID
 recipients (phase 2), removing the key from the DID document will be enough.
 
+The live servers are for demos only: don't encrypt real secrets with them. Both are run by
+the same organisation, so the split across servers protects nothing yet, and they come with no
+availability or backup guarantees.
+
 **Next:** phase 2, recipients identified by a DID.
 
 Still a prototype: nothing here is released or meant for production use yet.
