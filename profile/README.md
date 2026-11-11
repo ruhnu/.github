@@ -74,8 +74,9 @@ Access ends when the shares expire on the servers, or earlier when they are dele
 - Forks of the upstream CDOC2 repositories, where the Ruhnu changes live
 - [ruhnu-openspec](https://github.com/ruhnu/ruhnu-openspec): specs and change proposals
   shared across the forks
-- [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo): scripts that run the whole scheme
-  locally — two shares servers, an ssh-agent and `cdoc2-cli`
+- [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo): the whole scheme end to end, either
+  locally (two shares servers, an ssh-agent and `cdoc2-cli`) or against the live shares
+  servers with the CLI container image
 - [ruhnu-sbx](https://github.com/ruhnu/ruhnu-sbx): Docker sandbox kit for running Claude
   Code on the forks
 
@@ -89,6 +90,14 @@ the client library and the shares server, where it sits behind a feature flag th
 default. It runs locally with [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo), and the pull
 requests in the forks are under review — see the
 [tracking issue](https://github.com/ruhnu/ruhnu-openspec/issues/1).
+
+**Two live shares servers** run it, on separate infrastructure:
+`https://share1-ruhnu.duckdns.org` (Oracle Cloud) and `https://share2-ruhnu.cyber.ee`
+(on-premises). With the container image `ghcr.io/ruhnu/ruhnu-cli`, encrypting to an SSH key
+and decrypting through your ssh-agent needs only Docker; see
+[ruhnu-demo/live](https://github.com/ruhnu/ruhnu-demo/tree/main/live). Shares there expire
+after at most 14 days. Revoking earlier still takes an admin on one of the servers; with DID
+recipients (phase 2), removing the key from the DID document will be enough.
 
 **Next:** phase 2, recipients identified by a DID.
 
