@@ -9,6 +9,10 @@ single server can decrypt anything on its own. An ssh-agent can sign but not dec
 same constraint the scheme was designed around for Smart-ID — so the scheme carries over
 with the signature coming from an SSH key instead.
 
+**Try it:** [ruhnu-demo/live](https://github.com/ruhnu/ruhnu-demo/tree/main/live) encrypts
+to your SSH key or DID and decrypts through your ssh-agent against the live shares servers,
+with only Docker.
+
 ## Why Ruhnu
 
 Ruhnu is Estonia's most remote inhabited island. Key shares are held on separate servers,
@@ -68,6 +72,14 @@ sequenceDiagram
 
 Access ends when the shares expire on the servers, or earlier when they are deleted on any one server.
 
+**DID recipients.** The recipient can also be a `did:web` DID, such as `did:web:alice.github.io`, whose DID
+document (here `https://alice.github.io/.well-known/did.json`) lists the person's SSH public keys. When
+encrypting, `cdoc2-cli` fetches the document and pins each listed key by its fingerprint:
+`ruhnu/did/<did>/hash/<fingerprint>`. Decryption goes through `ssh-agent` as above, but every shares server
+also fetches the DID document and releases its share only while it still lists the pinned key. Removing the
+key from the document revokes access at once, on every server, without an admin. Because the fingerprint is
+pinned in the encrypted file, a compromised DID host can block access but can't add a key that opens it.
+
 ## What lives here
 
 - Design documents and probe experiments for the SSH work
@@ -85,25 +97,24 @@ Changes in the forks are kept so that upstream changes keep merging in; see
 
 ## Status
 
-**Phase 1 works end to end:** SSH public key recipients (ECDSA P-256 keys) in `cdoc2-cli`,
-the client library and the shares server, where it sits behind a feature flag that is off by
-default. It runs locally with [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo), and the pull
-requests in the forks are under review — see the
-[tracking issue](https://github.com/ruhnu/ruhnu-openspec/issues/1).
+**Phases 1 and 2 are merged** into the `ruhnu` branch of each fork: SSH public key recipients
+([phase 1](https://github.com/ruhnu/ruhnu-openspec/issues/1)) and `did:web` DID recipients
+([phase 2](https://github.com/ruhnu/ruhnu-openspec/issues/4)), both with ECDSA P-256 keys, in
+`cdoc2-cli`, the client library and the shares server, where they sit behind a feature flag
+that is off by default. Both run locally with [ruhnu-demo](https://github.com/ruhnu/ruhnu-demo).
 
-**Two live shares servers** run it, on separate infrastructure:
+**Two live shares servers** run them, on separate infrastructure:
 `https://share1-ruhnu.duckdns.org` (Oracle Cloud) and `https://share2-ruhnu.cyber.ee`
-(on-premises). With the container image `ghcr.io/ruhnu/ruhnu-cli`, encrypting to an SSH key
-and decrypting through your ssh-agent needs only Docker; see
-[ruhnu-demo/live](https://github.com/ruhnu/ruhnu-demo/tree/main/live). Shares there expire
-after at most 14 days. Revoking earlier still takes an admin on one of the servers; with DID
-recipients (phase 2), removing the key from the DID document will be enough.
+(on-premises). With the container image `ghcr.io/ruhnu/ruhnu-cli:latest`, encrypting to an SSH
+key or a DID and decrypting through your ssh-agent needs only Docker; see
+[ruhnu-demo/live](https://github.com/ruhnu/ruhnu-demo/tree/main/live). The servers accept DID
+documents hosted on GitHub Pages (`did:web:<username>.github.io`). SSH key shares expire after at
+most 14 days, and revoking them earlier takes an admin on one of the servers. DID shares last up
+to 5 years, since removing the key from the DID document revokes them.
 
 The live servers are for demos only: don't encrypt real secrets with them. Both are run by
 the same organisation, so the split across servers protects nothing yet, and they come with no
 availability or backup guarantees.
-
-**Next:** phase 2, recipients identified by a DID.
 
 Still a prototype: nothing here is released or meant for production use yet.
 
